@@ -1,12 +1,19 @@
 import ImagePopup from "../Popup/components/ImagePopup/ImagePopup.jsx";
+import DeleteConfirmation from "../Popup/components/DeleteConfirmation/DeleteConfirmation.jsx";
 
 export default function Card(props) {
-  const { card, handleOpenPopup, handleLikeClick } = props;
+  const { card, handleOpenPopup, handleLikeClick, handleCardDelete } = props;
   const { _id, name, link, isLiked } = card;
 
   const imagePopup = {
     title: null,
     children: <ImagePopup card={card} />,
+  };
+
+  const deletePopup = {
+    title: "Tem certeza?",
+    isConfirmation: true,
+    children: <DeleteConfirmation onConfirm={() => handleCardDelete(_id)} />,
   };
 
   return (
@@ -21,6 +28,7 @@ export default function Card(props) {
         aria-label="Delete card"
         className="card__delete-button"
         type="button"
+        onClick={() => handleOpenPopup(deletePopup)}
       />
       <div className="card__description">
         <h2 className="card__title">{name}</h2>

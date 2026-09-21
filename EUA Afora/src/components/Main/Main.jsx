@@ -1,5 +1,6 @@
 import { useState } from "react";
 import avatar from "../../images/avatar.jpg";
+import editIcon from "../../images/vector.png";
 import Popup from "./components/Popup/Popup.jsx";
 import NewCard from "./components/Popup/components/NewCard/NewCard.jsx";
 import EditProfile from "./components/Popup/components/EditProfile/EditProfile.jsx";
@@ -55,6 +56,11 @@ export default function Main() {
     );
   }
 
+  function handleCardDelete(cardId) {
+    setCards((cards) => cards.filter((card) => card._id !== cardId));
+    handleClosePopup();
+  }
+
   return (
     <main className="content">
       <section className="profile page__section">
@@ -66,7 +72,7 @@ export default function Main() {
           >
             <img
               className="profile__avatar-edit-icon"
-              src="./images/vector.png"
+              src={editIcon}
               alt="Editar foto do perfil"
             />
           </div>
@@ -101,13 +107,18 @@ export default function Main() {
               card={card}
               handleOpenPopup={handleOpenPopup}
               handleLikeClick={handleLikeClick}
+              handleCardDelete={handleCardDelete}
             />
           ))}
         </ul>
       </section>
 
       {popup && (
-        <Popup onClose={handleClosePopup} title={popup.title}>
+        <Popup
+          onClose={handleClosePopup}
+          title={popup.title}
+          isConfirmation={popup.isConfirmation}
+        >
           {popup.children}
         </Popup>
       )}
