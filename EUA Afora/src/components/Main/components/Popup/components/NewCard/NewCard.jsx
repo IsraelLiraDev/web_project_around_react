@@ -1,10 +1,31 @@
-export default function NewCard() {
+import { useState } from "react";
+
+export default function NewCard(props) {
+  const { onAddPlaceSubmit } = props;
+
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+  }
+
+  function handleLinkChange(event) {
+    setLink(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onAddPlaceSubmit({ name, link });
+  }
+
   return (
     <form
       className="popup__form"
       name="card-form"
       id="new-card-form"
       noValidate
+      onSubmit={handleSubmit}
     >
       <label className="popup__field">
         <input
@@ -16,6 +37,8 @@ export default function NewCard() {
           placeholder="Title"
           required
           type="text"
+          value={name}
+          onChange={handleNameChange}
         />
         <span className="popup__error" id="card-name-error"></span>
       </label>
@@ -27,6 +50,8 @@ export default function NewCard() {
           placeholder="Image link"
           required
           type="url"
+          value={link}
+          onChange={handleLinkChange}
         />
         <span className="popup__error" id="card-link-error"></span>
       </label>

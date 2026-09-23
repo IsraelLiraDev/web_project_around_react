@@ -5,6 +5,10 @@ export default function Card(props) {
   const { card, handleOpenPopup, handleLikeClick, handleCardDelete } = props;
   const { _id, name, link, isLiked } = card;
 
+  const cardLikeButtonClassName = `card__like-button ${
+    isLiked ? "card__like-button_active" : ""
+  }`;
+
   const imagePopup = {
     title: null,
     children: <ImagePopup card={card} />,
@@ -35,10 +39,8 @@ export default function Card(props) {
         <button
           aria-label="Like card"
           type="button"
-          className={`card__like-button ${
-            isLiked ? "card__like-button_active" : ""
-          }`}
-          onClick={() => handleLikeClick(_id)}
+          className={cardLikeButtonClassName}
+          onClick={() => handleLikeClick(_id, isLiked)}
         />
       </div>
     </li>
